@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th=“http://www.thymeleaf.org”>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .error {
+        color: red;
+        font-size: 14px;
+        display: block; /* Để nó xuống dòng thay vì dùng <br> */
+        margin-top: 5px;
+    }
+</style>
+<body>
+<form th:action="@{/dich-vu/update/{idUpdate}(idUpdate=${dvsd.id})}"  th:object="${dvsd}" method="post">
+    <input type="hidden" name="id" th:field="*{id}" > <br/>
+    <p>Giá trị ID: <span th:text="*{id}"></span></p>
+    <label>Ma</label>
+    <input type="text" name="ma" th:field="*{ma}" > <br/>
+    <span class="error" th:errors="*{ma}"></span>
+
+    <label>ten</label>
+    <input type="text" name="ten"  th:field="*{ten}"> <br/>
+    <span class="error" th:errors="*{ten}"></span>
+
+    <label>Ngay tao</label>
+    <input type="date" name="ngayTao"  th:field="*{ngayTao}" readonly> <br/>
+    <span class="error" th:errors="*{ngayTao}"></span>
+<!--    max="[[${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}]]" -->
+<!--    đảm bảo người dùng chỉ có thể chọn ngày hiện tại hoặc quá khứ.-->
+
+    <label>Ghi chu</label>
+    <input type="text" name="ghiChu"  th:field="*{ghiChu}"> <br/>
+
+    <label>Trang thai</label>
+    <input type="radio" name="trangThai"  th:field="*{trangThai}" value="1" checked>Hoat dong
+    <input type="radio" name="trangThai"  th:field="*{trangThai}" value="0">khong Hoat dong
+    <br/>
+
+    <labe>ten dich vu</labe>
+    <select name="dichVu"  th:field="*{dichVu}">
+        <option
+                th:each="t : ${ListDichVu}"
+                th:value="${t.id}"
+                th:text="${t.tenDV}"
+        ></option>
+    </select>
+    <br/>
+
+    <button type="submit">update</button>
+</form>
+</body>
+</html>
