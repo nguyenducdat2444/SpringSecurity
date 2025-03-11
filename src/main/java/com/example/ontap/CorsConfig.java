@@ -18,11 +18,11 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**") // Cho phép tất cả API bắt đầu với /api/
-                        .allowedOrigins("http://localhost:5173") // Cổng Vue.js
+                registry.addMapping("/api/**")
+                        .allowedOrigins("http://localhost:5173")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(true); // Nếu có đăng nhập, bật cái này
+                        .allowCredentials(true);
             }
         };
     }
@@ -42,6 +42,7 @@ public class CorsConfig {
                         .anyRequest().authenticated() // Các request khác cần xác thực
                 )
                 .httpBasic(Customizer.withDefaults()) // Hỗ trợ basic auth (nếu cần)
+//                .formLogin(Customizer.withDefaults()) // ✅ Chuyển sang form login
                 .build();
     }
 }

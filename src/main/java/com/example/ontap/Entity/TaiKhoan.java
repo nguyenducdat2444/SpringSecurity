@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "tai_khoan")
+@Data
 public class TaiKhoan {
 
     @Id

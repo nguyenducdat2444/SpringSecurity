@@ -31,8 +31,14 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        TaiKhoan taiKhoan = taikhoanService.login(loginRequest);
-        return ResponseEntity.ok("Dang nhap thanh cong!" + taiKhoan.getTenTaiKhoan());
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getTenTaiKhoan(), request.getMatKhau()));
+            String token = jwtUtils.generateToken(request.getTenTaiKhoan());
+            return ResponseEntity.ok(token);
+        } catch (AuthenticationException e) {
+            return ResponseEntity.badRequest().body("Sai thông tin đăng nhập");
+        }
     }
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Data
 public class LoginRequest {
     private String email;
     private String matKhau;

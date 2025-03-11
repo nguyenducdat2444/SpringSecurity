@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TaiKhoanService {
 
     private final TaiKhoanRepo taiKhoanRepo;
@@ -30,8 +31,9 @@ public class TaiKhoanService {
         taiKhoan.setTenTaiKhoan(request.getTenTaiKhoan());
         taiKhoan.setEmail(request.getEmail());
         taiKhoan.setMatKhau(passwordEncoder.encode( request.getMatKhau()));
+        System.out.println("Tài khoản đã lưu: " + taiKhoan);
         return taiKhoanRepo.save(taiKhoan);
-
+        System.out.println("Tài khoản đã lưu: " + taiKhoan);
     }
 
     public TaiKhoan login (LoginRequest request) {
@@ -42,5 +44,9 @@ public class TaiKhoanService {
             throw new RuntimeException("Password incorrect");
         }
         return taiKhoan;
+    }
+
+    public TaiKhoan loadUserByUsername(String username) {
+        return new TaiKhoan();
     }
 }
