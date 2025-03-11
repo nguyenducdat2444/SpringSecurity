@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th=“http://www.thymeleaf.org”>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .error {
+        color: red;
+        font-size: 14px;
+        display: block; /* Để nó xuống dòng thay vì dùng <br> */
+        margin-top: 5px;
+    }
+</style>
+<body>
+<form th:action="@{/dich-vu/add}" th:object="${dvsd}" method="post">
+
+    <label>Ma</label>
+    <input type="text" name="ma"  th:field="*{ma}"> <br/>
+    <span class="error" th:errors="*{ma}"></span>
+
+    <label>ten</label>
+    <input type="text" name="ten" th:field="*{ten}"> <br/>
+    <span class="error" th:errors="*{ten}"></span>
+
+    <label>Ngay tao</label>
+    <input type="date" name="ngayTao" th:field="*{ngayTao}"> <br/>
+    <span class="error" th:errors="*{ngayTao}"></span>
+
+    <label>Ghi chu</label>
+    <input type="text" name="ghiChu" > <br/>
+
+    <label>Trang thai</label>
+    <input type="radio" name="trangThai" value="1" checked>Hoat dong
+    <input type="radio" name="trangThai" value="0">khong Hoat dong
+    <br/>
+    <label>ten dich vu</label>
+    <select name="dichVu.id">
+        <option
+            th:each="t : ${ListDichVu}"
+            th:value="${t.id}"
+            th:text="${t.tenDV}"
+        ></option>
+    </select>
+    <br/>
+
+    <button type="submit">Thêm dữ liệu</button>
+</form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Ma</th>
+                <th>ten</th>
+                <th>Ngay tao</th>
+                <th>ghi chu</th>
+                <th>trang thai</th>
+                <th>Ma dich vu</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="dv, stat : ${ListDVSD}">
+                <td th:text="${stat.index +1}">1</td>
+                <td th:text="${dv.ma}"></td>
+                <td th:text="${dv.ten}"></td>
+                <td th:text="${dv.ngayTao}"></td>
+                <td th:text="${dv.ghiChu}"></td>
+                <td th:text="${dv.trangThai ==1 ? 'hoat dong' : 'ko hoat dong'}"></td>
+<!--                <td th:text="${dv.dichVu.tenDV}"></td>-->
+                <td th:text="${dv.dichVu != null ? dv.dichVu.tenDV : ''}"></td>
+                <td>
+                    <a th:href="@{/dich-vu/delete/{maXoa}(maXoa=${dv.id})}">Delete</a> ||
+                    <a th:href="@{/dich-vu/view-update/{idUpdate}(idUpdate=${dv.id})}">Detail</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
